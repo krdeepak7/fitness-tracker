@@ -28,11 +28,11 @@ export class LoginComponent implements OnInit {
     ) { }
 
   ngOnInit(): void {
+    this.initializeFormGroup();
     this.isLoading$ = this.store.select(fromRoot.getIsLoading);
     // this.loadingSubscription = this.uiService.loadingStateChanged
     // .subscribe(isLoading => this.isLoading = isLoading);
 
-    this.initializeFormGroup();
   }
 
   onSubmit(): void {

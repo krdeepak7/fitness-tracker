@@ -33,13 +33,17 @@ export class AuthService {
   }
 
   registerUser(authData: AuthData): void {
-    this.uiService.loadingStateChanged.next(true);
+    // this.uiService.loadingStateChanged.next(true);
+    this.store.dispatch({type: 'START_LOADING'});
+    this.store.dispatch(new UI.StartLoading);
     this.afAuth.createUserWithEmailAndPassword(authData.email, authData.password)
     .then(result => {
-      this.uiService.loadingStateChanged.next(false);
+      // this.uiService.loadingStateChanged.next(false);
+      this.store.dispatch(new UI.StopLoading);
       // console.log(result);
     }).catch(error => {
-      this.uiService.loadingStateChanged.next(false);
+      // this.uiService.loadingStateChanged.next(false);
+      this.store.dispatch(new UI.StopLoading);
       this.uiService.showSnackbar(error.message, null, 3000);
     });
   }
@@ -47,16 +51,16 @@ export class AuthService {
   login(authData: AuthData): void {
     // this.uiService.loadingStateChanged.next(true);
     this.store.dispatch({type: 'START_LOADING'});
-    this.store.dispatch(new UI.StartLoading)
+    this.store.dispatch(new UI.StartLoading);
 
     this.afAuth.signInWithEmailAndPassword(authData.email,authData.password)
     .then(result => {
       // this.uiService.loadingStateChanged.next(false);
-      this.store.dispatch(new UI.StopLoading)
+      this.store.dispatch(new UI.StopLoading);
       // console.log(result);
     }).catch(error => {
       // this.uiService.loadingStateChanged.next(false);
-      this.store.dispatch(new UI.StopLoading)
+      this.store.dispatch(new UI.StopLoading);
       this.uiService.showSnackbar(error.message, null, 3000);
     });
   }
